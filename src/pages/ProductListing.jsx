@@ -100,6 +100,7 @@ const ProductListing = ({ addToCart }) => {
                     <div className="cursor-pointer">
                       <img
                         src={product.image}
+                         alt={product.title || product.name}
                         className="w-full h-48 object-contain"
                       />
                       <h3 className="font-semibold mt-4">{product.title}</h3>

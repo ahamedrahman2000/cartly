@@ -1,63 +1,26 @@
-const products = [
-  {
-    id: 1,
-    title: "Noise Cancelling Headphones",
-    price: 89.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 2,
-    title: "Minimal Wrist Watch",
-    price: 49.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 3,
-    title: "Wireless Mouse",
-    price: 24.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 4,
-    title: "Stylish Backpack",
-    price: 59.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 5,
-    title: "Sneakers",
-    price: 69.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 6,
-    title: "Smart Home Lamp",
-    price: 39.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 7,
-    title: "Bluetooth Speaker",
-    price: 29.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-  {
-    id: 8,
-    title: "Premium Sunglasses",
-    price: 79.99,
-    img: "https://i.pravatar.cc/400/400",
-    rate: 4.9,
-  },
-];
+import { Link } from "react-router-dom";
+import { products } from "../data/products";
+import { useState } from "react";
 
-const ProductListing = () => {
+const ProductListing = ({ addToCart }) => {
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const handleCheck = (e) => {
+    const value = e.target.value;
+    const checked = e.target.checked;
+
+    if (checked) {
+      setSelectedCategories([...selectedCategories, value]);
+    } else {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== value));
+    }
+  };
+  const displayProducts =
+    selectedCategories.length === 0
+      ? products
+      : products.filter((product) =>
+          selectedCategories.includes(product.category)
+        );
+
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <div className="grid md:grid-cols-[250px_1fr] grid-cols-1 gap-10">
@@ -67,16 +30,28 @@ const ProductListing = () => {
           <div className="flex flex-col space-y-2 mt-6">
             <p className="font-semibold">Category</p>
             <label>
-              <input type="checkbox" /> Electronics
+              <input
+                type="checkbox"
+                value="Electronics"
+                onChange={handleCheck}
+              />{" "}
+              Electronics
             </label>
             <label>
-              <input type="checkbox" /> Fashion
+              <input type="checkbox" value="Fashion" onChange={handleCheck} />{" "}
+              Fashion
             </label>
             <label>
-              <input type="checkbox" /> Home
+              <input
+                type="checkbox"
+                value="Accessories"
+                onChange={handleCheck}
+              />{" "}
+              Accessories
             </label>
             <label>
-              <input type="checkbox" /> Sports
+              <input type="checkbox" value="Footwear" onChange={handleCheck} />{" "}
+              Footwear
             </label>
           </div>
 
@@ -116,16 +91,28 @@ const ProductListing = () => {
 
           <div>
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-              {products.map((product) => (
+              {displayProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="shadow rounded-2xl hover:shadow-lg hover:-translate-y-1 transition cursor-pointer p-4" >
-                  <img src={product.img} className=" w-full h-[200px]"/>
-                  <p className="font-semibold">{product.title}</p>
-                  <p className="text-yellow-300 text-xs mb-2"> ⭐ {product.rate}
-                  </p>
-                  <p className="font-bold">${product.price}</p>
-                  <button className="mt-3 text-white bg-blue-600 w-full py-1 rounded-md">
+                  className="bg-white border border-gray-200 rounded-xl p-4"
+                >
+                  <Link to={`/product/${product.id}`}>
+                    <div className="cursor-pointer">
+                      <img
+                        src={product.image}
+                        className="w-full h-48 object-contain"
+                      />
+                      <h3 className="font-semibold mt-4">{product.title}</h3>
+                      <p className="font-bold text-blue-700">
+                        ${product.price}
+                      </p>
+                    </div>
+                  </Link>
+
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg"
+                  >
                     Add to Cart
                   </button>
                 </div>

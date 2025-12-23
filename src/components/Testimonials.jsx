@@ -1,10 +1,14 @@
+import user from "../assets/images/user.jpg";
+import user_1 from "../assets/images/user_3.jpg";
+import user_2 from "../assets/images/user_2.jpg";
+
 const reviews = [
   {
     id: 1,
     name: "Emily Johnson",
     role: "Verified Buyer",
     rating: "★★★",
-    img: "https://i.pravatar.cc/80/80",
+    img: user,
     review:
       "Absolutely loved the quality! Fast shipping and great customer service. Highly recommended.",
   },
@@ -13,7 +17,7 @@ const reviews = [
     name: "Michael Smith",
     role: "Verified Buyer",
     rating: "★★★★",
-    img: "https://i.pravatar.cc/80/80",
+    img: user_1,
     review:
       "The product is amazing for the price. Packaging was neat and delivery was on time.",
   },
@@ -22,11 +26,13 @@ const reviews = [
     name: "Sophia Lee",
     role: "Verified Buyer",
     rating: "★★★★★",
-    img: "https://i.pravatar.cc/80/80",
+   img: user_2,
     review:
       "Great experience! The design and quality exceeded my expectations. Will shop again.",
   },
 ];
+
+
 
 const Testimonials = () => {
   return (
@@ -48,6 +54,7 @@ const Testimonials = () => {
             <div className="flex space-x-2  items-center">
               <img
                 src={review.img}
+                alt=""
                 className="rounded-full w-15 h-14 object-cover"
               />
               <div>

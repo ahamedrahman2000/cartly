@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+import { useContext } from "react";
 
 const Checkout = () => {
+  const { cart, shipping, tax } = useContext(CartContext);
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
       <h1 className="text-3xl font-bold text-center mb-10">Checkout</h1>
@@ -106,17 +109,31 @@ const Checkout = () => {
           <h3 className="text-xl font-bold mb-4">Order Summary</h3>
 
           <div className="space-y-5">
-            <div className="flex items-center gap-4 border-b border-gray-200 pb-5">
-              <img
-                src="https://picsum.photos/100/100"
-                className="w-20 h-20 rounded-lg object-cover"
-              />
-              <div>
-                <h4 className="font-semibold text-gray-900">
-                  Wireless Headphones
-                </h4>
-                <p className="text-blue-700 font-bold mt-2">$129.99</p>
-              </div>
+            <div className="space-y-4">
+              {cart.length === 0 ? (
+                <p>Your cart is empty</p>
+              ) : (
+                <>
+                  {cart.map((item) => (
+                    <div
+                      key={item.id}
+                      className="    items-center border p-4 rounded-lg mb-4"
+                    >
+                      <div className="space-y-4">
+                        <div className="flex justify-between">
+                          <span className="font-semibold">{item.title}</span>
+                          <span>Quantity</span>
+                        </div>
+
+                        <div className="flex justify-between">
+                          <span>${item.price}</span>
+                          <span>{item.quantity}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
 
             <div className="text-gray-700 space-y-2">
@@ -124,18 +141,18 @@ const Checkout = () => {
                 <span>Subtotal</span> <span>$129.99</span>
               </div>
               <div className="flex justify-between">
-                <span>Shipping</span> <span>$4.99</span>
+                <span>Shipping</span> <span>${shipping}</span>
               </div>
               <div className="flex justify-between">
-                <span>Tax</span> <span>$7.50</span>
+                <span>Tax</span> <span>${tax}</span>
               </div>
             </div>
             <div className="flex justify-between text-xl font-bold border-t pt-4 mt-4">
               <span>Total</span>
-              <span>$142.48</span>
+              <span> </span>
             </div>
             <Link to="/order-summary">
-              <button className="w-full bg-gray-900 text-white py-3 rounded-lg hover:bg-gray-800 transition">
+              <button className="w-full bg-gray-900 text-white py-3 mt-5 rounded-lg hover:bg-gray-800 transition">
                 Continue
               </button>
             </Link>

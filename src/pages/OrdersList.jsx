@@ -29,7 +29,7 @@ const orders = [
 
 const OrdersList = () => {
   return (
-    <section className="max-w-5xl mx-auto px-6 py-20">
+    <section className="max-w-7xl mx-auto px-6  ">
       <h2 className="text-3xl font-bold text-gray-900">My Orders</h2>
 
       <div className="mt-10 space-y-6">

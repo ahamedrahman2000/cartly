@@ -1,57 +1,36 @@
-import { Link } from "react-router-dom";
-import heels from "../assets/images/heels.jpg";
-import juice from "../assets/images/juice.jpg";
-import mam from "../assets/images/mam.jpg";
-import tablet from "../assets/images/tablet.jpg";
+import { Link } from "react-router-dom"; 
+import { bestSellerProducts } from "../data/bestSellerProducts";
 
-const categories = [
-  {
-    id:1,
-    name: "Heels",
-    img: heels,
-    
-  },
-  {
-    id:2,
-    name: "Sprite",
-    img: juice,
-    
-  },
-  {
-    id:3,
-    name: "MamaEarth",
-    img: mam,
-    
-  },
-  {
-    id:4,
-    name: "Tablets",
-    img: tablet,
-  
-  },
-];
-
-const BestSellers = () => {
+const BestSellers = ({addToCart}) => {
   return (
     <section className="max-w-7xl mx-auto px-6 py-20">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 text-center">
         Best Sellers
       </h2>
 
-      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {categories.map((products) => (
-          <Link key={products.id} to={`/product/${products.id}`}>
-           <div className="shadow rounded-2xl hover:shadow-lg hover:-translate-y-1 transition cursor-pointer p-4" >
-            <img src={products.img} className=" w-full h-[200px] " />
-            <p className="font-semibold">{products.name}</p> 
-            <button className="mt-3 text-white bg-blue-600 w-full py-1 rounded-md">
-              Add to Cart
-            </button>
+     <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {bestSellerProducts.map((product) => (
+              <div key={product.id}
+                className="bg-white border border-gray-200 rounded-xl p-4" >
+                <Link to={`/product/${product.id}`}>
+                  <div className="cursor-pointer">
+                    <img
+                      src={product.image}
+                      alt=""
+                      className="w-full h-48 object-contain"
+                    />
+                    <h3 className="font-semibold mt-4">{product.title}</h3>
+                    <p className="font-bold text-blue-700">${product.price}</p>
+                  </div>
+                </Link>
+    
+                <button  onClick={() => addToCart(product) }
+                  className="mt-4 w-full bg-gray-900 text-white py-2 rounded-lg" >
+                  Add to Cart
+                </button>
+              </div>
+            ))}
           </div>
-          </Link>
-         
-        ))}
-      </div>
     </section>
   );
 };
